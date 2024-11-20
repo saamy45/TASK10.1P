@@ -5,17 +5,16 @@ const cors = require("cors");
 
 const app = express();
 app.use(bodyParser.json());
-app.use(cors()); // Enable CORS for requests from the frontend
+app.use(cors()); 
 
-// Mailchimp configuration
+
 mailchimp.setConfig({
-  apiKey: "3750986d37ea1fc594a903486b0ba8f8-us22", // Replace with your Mailchimp API Key
-  server: "us22" // Replace with your server prefix (us22 in this case)
+  apiKey: "3750986d37ea1fc594a903486b0ba8f8-us22",
+  server: "us22" 
 });
 
-const listId = "97c5fd0b7d"; // Replace with your Mailchimp Audience ID
+const listId = "97c5fd0b7d";
 
-// Route for subscribing users
 app.post("/subscribe", async (req, res) => {
   const { email } = req.body;
 
@@ -24,7 +23,6 @@ app.post("/subscribe", async (req, res) => {
   }
 
   try {
-    // Add the email to the list with "subscribed" status
     const response = await mailchimp.lists.addListMember(listId, {
       email_address: email,
       status: "subscribed",
@@ -40,7 +38,6 @@ app.post("/subscribe", async (req, res) => {
   }
 });
 
-// Server setup
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
